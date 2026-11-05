@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login dan Curriculum Vitae</title>
+<style>
+*{
+  box-sizing:border-box
+}
+body{
+  min-height:100vh;
+  margin:0;
+  padding:24px;
+  display:grid;
+  place-items:center;
+  background:#eef1f4;
+  color:#242a2e;
+  font-family:Arial,Helvetica,sans-serif
+}
+[hidden]{
+  display:none!important
+}
+.login-card{
+  width:100%;
+  max-width:430px;
+  padding:32px;
+  background:#fff;
+  border-radius:14px;
+  box-shadow:0 10px 30px #0002
+}
+.login-card 
+h1{
+  margin-top:0;
+  color:#202930
+}
+.login-card 
+p{color:#64717b;
+  line-height:1.5}
+  .form-group{
+    margin:20px 0}
+    label{display:block;
+      margin-bottom:8px;
+      font-weight:700
+    }
+input,select{
+  width:100%;
+  padding:12px;
+  border:2px solid #cbd2d8;
+  border-radius:7px;
+  font:inherit;
+  background:#fff
+}
+input:focus,
+select:focus{
+  outline:none;
+  border-color:#b99e4f;
+  box-shadow:0 0 0 3px #dfc87e33
+}
+input.valid,select.valid{
+  border-color:#198754;
+  background:#f3fff7
+}
+input.invalid,select.invalid{
+  border-color:#dc3545;
+  background:#fff6f6
+}
+.field-message{
+  display:block;
+  min-height:18px;
+  margin-top:5px;
+  font-size:12px
+}
+.field-message.success{
+  color:#198754
+}
+.field-message.error{
+  color:#dc3545
+}
+.password-wrap{
+  position:relative
+}
+.password-wrap input{
+  padding-right:48px
+}
+.toggle-password{
+  position:absolute;
+  right:8px;
+  top:50%;
+  transform:translateY(-50%);
+  width:34px;
+  height:34px;
+  border:0;
+  background:transparent;
+  cursor:pointer;font-size:19px
+}
+.login-button{
+  width:100%;
+  padding:13px;
+  border:0;
+  border-radius:7px;
+  background:#202930;
+  color:#fff;
+  font:inherit;
+  font-weight:700;
+  cursor:pointer
+}
+.login-button:hover{
+  background:#35434d
+}
+.login-message{
+  min-height:20px;
+  color:#b42318;
+  font-size:14px
+}
+.cv-page{
+  width:min(100%,1100px)
+}
+.cv-toolbar{
+  display:flex;
+  justify-content:flex-end;
+  margin-bottom:14px
+}
+.logout-button{
+  padding:10px 16px;
+  border:1px solid #202930;
+  border-radius:6px;
+  background:#fff;
+  color:#202930;
+  font:inherit;
+  font-weight:700;
+  cursor:pointer
+}
+.logout-button:hover{
+  background:#202930;
+  color:#fff
+}
+.resume{
+  display:grid;
+  grid-template-columns:34% 66%;
+  width:100%;
+  min-height:900px;
+  overflow:hidden;
+  background:#fff;
+  box-shadow:0 12px 36px #0003
+}
+.sidebar{
+  padding:52px 34px;
+  background:#202930;
+  color:#fff
+}
+.profile-photo{
+  display:block;
+  width:220px;
+  height:220px;
+  max-width:100%;
+  margin:0 auto 58px;
+  object-fit:cover;
+  border-radius:50%;
+  background:#d9dee2
+}
+.sidebar-section{
+  margin-bottom:32px
+}
+.sidebar-title{
+  margin:0 -34px 22px;
+  padding:10px 18px 10px 34px;
+  border-radius:0 30px 30px 0;
+  background:#dfc87e;color:#202930;
+  font-size:20px;
+  letter-spacing:1px;
+  text-transform:uppercase
+}
+.detail{
+  margin-bottom:15px;
+  line-height:1.45
+}
+.detail strong{
+  display:block;
+  margin-bottom:2px;
+  font-size:17px
+}
+.detail span{
+  color:#e4e8eb
+}
+.contact-item{
+  margin:18px 0;color:#e4e8eb;
+  line-height:1.5;overflow-wrap:anywhere
+}
+.contact-icon{
+  display:inline-block;
+  width:28px;
+  color:#dfc87e;
+  font-size:18px
+}
+.main-content{
+  min-width:0;
+  padding:40px 44px 56px;
+  background:#fff
+}
+.top-row{
+  margin-bottom:58px
+}
+.name{
+  margin:48px 0 4px;
+  color:#202930;
+  font-size:clamp(32px,5vw,54px);
+  line-height:1.05;
+  text-transform:uppercase
+}
+.subtitle{
+  margin:8px 0 0;
+  font-size:27px;
+  font-style:italic;
+  color:#333a3f
+}
+.cv-section{
+  margin-bottom:38px
+}
+.cv-heading{
+  margin:0 0 16px;
+  padding-bottom:5px;border-bottom:1px solid #343a3f;
+  color:#202930;
+  font-size:22px;
+  text-transform:uppercase
+}
+.cv-section p{
+  margin:0;
+  color:#444b50;
+  font-size:17px;
+  line-height:1.6
+}
+.education-item{
+  display:flex;
+  justify-content:space-between;
+  gap:16px;
+  margin:13px 0;
+  color:#444b50;
+  font-size:17px;
+  line-height:1.5
+}
+.education-year{
+  flex:0 0 105px;
+  color:#40564d;
+  text-align:right;
+  white-space:nowrap
+}
+.job{
+  margin:20px 0
+}
+.job h3{
+  margin:0 0 8px;
+  font-size:18px
+}
+.job ul,.skills-list{
+  margin:0;padding-left:22px;
+  color:#444b50;
+  font-size:16px;
+  line-height:1.55
+}
+@media(max-width:760px)
+{body{padding:12px}
+.resume{grid-template-columns:1fr}
+.sidebar{padding:32px 28px}
+.profile-photo{
+  width:170px;
+  height:170px;
+  margin-bottom:36px
+}
+  .sidebar-title{
+    margin-left:-28px;
+    margin-right:-28px;
+    padding-left:28px
+    }
+    .main-content{
+      padding:28px 24px 40px
+      }
+      .top-row{
+        margin-bottom:36px
+        }
+        .name{
+          margin-top:18px
+          }
+          }@media(max-width:460px)
+          {.name{font-size:34px}
+          .subtitle{font-size:22px}
+          .education-item{
+            flex-direction:column;
+            gap:2px}
+            .education-year{
+              text-align:left}
+              }
+  .login-header {
+    background-color: #5fa3e7;
+    padding: 25px 20px;
+    margin: -32px -32px 25px;
+    border-radius: 14px 14px 0 0;
+    text-align: center;
+}
+
+.login-header h1 {
+    color: white;
+    text-align: center;
+    margin: 0 0 15px;
+}
+
+.login-header p {
+    color: white;
+    line-height: 1.5;
+    margin: 0;
+}
+
+.logout-button {
+    padding: 10px 16px;
+    border: 1px solid #000000;
+    border-radius: 6px;
+    background: #000000;
+    color: white;
+    font: inherit;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.logout-button:hover {
+    background: #333333;
+    color: white;
+}
+</style>
+</head>
+<body>
+
+<main id="loginPage" class="login-card">
+  <div class="login-header">
+    <h1>Login Mahasiswa</h1>
+    <p>
+        Masukkan data akun mahasiswa yang sesuai untuk membuka
+        halaman Curriculum Vitae.
+    </p>
+</div>
+  <form id="loginForm" novalidate>
+    <div class="form-group">
+      <label for="nim">NIM</label>
+      <input id="nim" type="text" placeholder="Masukkan NIM" autocomplete="username" aria-describedby="nimMessage">
+      <small id="nimMessage" class="field-message"></small>
+    </div>
+    <div class="form-group">
+      <label for="password">Password</label>
+      <div class="password-wrap">
+        <input id="password" type="password" placeholder="Masukkan password" autocomplete="current-password" aria-describedby="passwordMessage">
+        <button id="togglePassword" class="toggle-password" type="button" aria-label="Tampilkan password" title="Tampilkan password">👁</button>
+      </div>
+      <small id="passwordMessage" class="field-message"></small>
+    </div>
+    <div class="form-group">
+      <label for="jenjang">Jenjang pendidikan</label>
+      <select id="jenjang" aria-describedby="jenjangMessage">
+        <option value="">Pilih jenjang pendidikan</option>
+        <option value="D3">Diploma 3 (D3)</option>
+        <option value="D4">Diploma 4 (D4)</option>
+        <option value="S1">Sarjana (S1)</option>
+        <option value="S2">Magister (S2)</option>
+        <option value="S3">Doktor (S3)</option>
+      </select>
+      <small id="jenjangMessage" class="field-message"></small>
+    </div>
+    <button class="login-button" type="submit">Login</button>
+    <p id="loginMessage" class="login-message" aria-live="polite"></p>
+    <p>NIM : 2024140012 </p>
+    <p>Password : Jernima123</p>
+    <p>Jenjang Pendidikan : Diploma 4 (D4) </p>
+  </form>
+</main>
+
+<div id="cvPage" class="cv-page" hidden>
+  <div class="cv-toolbar">
+    <button id="logoutButton" class="logout-button" type="button">Log out</button>
+  </div>
+  <main class="resume">
+    <aside class="sidebar">
+      <img class="profile-photo" src="foto1.jpeg" alt="Foto Jernima Nababan">
+      <section class="sidebar-section">
+        <h2 class="sidebar-title">Data Diri</h2>
+        <div class="detail">
+          <strong>Tempat / Tanggal Lahir</strong>
+          <span>Nagasaribu, 19 Maret 2005</span>
+        </div>
+        <div class="detail">
+          <strong>Jenis Kelamin</strong>
+          <span>Perempuan</span></div>
+        <div class="detail">
+          <strong>Status</strong>
+          <span>Mahasiswa</span></div>
+        <div class="detail"><strong>Kewarganegaraan</strong>
+          <span>Indonesia</span></div>
+      </section>
+      <section class="sidebar-section">
+        <h2 class="sidebar-title">Kontak</h2>
+        <div class="contact-item"><span class="contact-icon">☎️</span> +6285783235644</div>
+        <div class="contact-item"><span class="contact-icon">✉️</span> jernimanababan99@gmail.com</div>
+        <div class="contact-item"><span class="contact-icon">⌖</span> Jl. Raharja, Gg Rahmat No.39C</div>
+      </section>
+      <section class="sidebar-section">
+        <h2 class="sidebar-title">Sosial Media</h2>
+        <div class="contact-item">Instagram: Jernimaaa</div>
+        <div class="contact-item">Facebook: Jernima Nababan</div>
+      </section>
+    </aside>
+    <section class="main-content">
+      <header class="top-row"><h1 class="name">Jernima Nababan</h1><p class="subtitle">Mahasiswa Aktif</p></header>
+      <section class="cv-section"><h2 class="cv-heading">Tentang Saya</h2>
+        <p>Saya merupakan seorang mahasiswa yang masih aktif di salah satu kampus swasta di provinsi Sumatera Utara (Medan), 
+        saya mahasiswa dari kampus AMIK Universal Medan, sekarang saya masih semester 5. 
+        Program studi yang saya ambil adalah D4 Sistem Informasi Bisnis, 
+        alasan yang mungkin saya ambil program studi ini karena saya ingin belajar lebih dalam tentang dunia IT dan juga saya ingin menjadi seorang programmer. 
+        Selama saya kuliah saya sudah beberapa kali membuat website sederhana, seperti ucapan selamat ulang tahun,ucapan hari guru 
+        dan juga saya belajar membuat portofolio sederhana.
+        Saya juga telah berpengalaman atau bergabung dalam dunia kerja kurang lebih 2 tahun sebagai admin disebuah usaha pada bagian pertanian.</p></section>
+      <section class="cv-section"><h2 class="cv-heading">Pendidikan</h2>
+        <div class="education-item"><span>SMK Negeri 1 Lintongnihuta</span><span class="education-year">2020–2023</span></div>
+        <div class="education-item"><span>SMP Negeri 1 Lintongnihuta</span><span class="education-year">2017–2020</span></div>
+        <div class="education-item"><span>SD Negeri 177059 Silaban Hutasoit</span><span class="education-year">2011–2017</span></div>
+      </section>
+      <section class="cv-section"><h2 class="cv-heading">Pengalaman Kerja</h2><div class="job"><h3>CV Sejahtera Tani</h3><ul><li>Mengelola barang masuk dan barang keluar</li><li>Membuat laporan keuangan</li><li>Membuat laporan stock barang</li><li>Membuat laporan penjualan</li><li>Mengatur jadwal pengantaran barang/pesanan</li></ul></div></section>
+      <section class="cv-section"><h2 class="cv-heading">Kemampuan</h2><ul class="skills-list"><li>Mampu menggunakan aplikasi microsoft word</li><li>Mampu menggunakan aplikasi microsoft excel</li><li>Mampu menggunakan beberapa software dalam pemograman</li><li>Mampu berkomunikasi dan bekerjasama dengan baik</li></ul></section>
+    </section>
+  </main>
+</div>
+
+<script>
+const akunBenar = { nim: "2024140012", password: "Jernima123", jenjang: "D4" };
+
+const loginPage = document.getElementById("loginPage");
+const cvPage = document.getElementById("cvPage");
+const loginForm = document.getElementById("loginForm");
+const loginMessage = document.getElementById("loginMessage");
+const nimInput = document.getElementById("nim");
+const passwordInput = document.getElementById("password");
+const jenjangInput = document.getElementById("jenjang");
+const togglePassword = document.getElementById("togglePassword");
+
+function periksaKolom(input, pesanElement, benar, pesanSalah) {
+  if (input.value.trim() === "") {
+    input.classList.remove("valid", "invalid");
+    pesanElement.textContent = "";
+    pesanElement.className = "field-message";
+    return false;
+  }
+  if (benar) {
+    input.classList.add("valid");
+    input.classList.remove("invalid");
+    pesanElement.textContent = "✓ Benar";
+    pesanElement.className = "field-message success";
+    return true;
+  }
+  input.classList.add("invalid");
+  input.classList.remove("valid");
+  pesanElement.textContent = "✕ " + pesanSalah;
+  pesanElement.className = "field-message error";
+  return false;
+}
+
+function validasiNim() {
+  return periksaKolom(nimInput, document.getElementById("nimMessage"), nimInput.value.trim() === akunBenar.nim, "NIM tidak sesuai.");
+}
+function validasiPassword() {
+  return periksaKolom(passwordInput, document.getElementById("passwordMessage"), passwordInput.value === akunBenar.password, "Password tidak sesuai.");
+}
+function validasiJenjang() {
+  return periksaKolom(jenjangInput, document.getElementById("jenjangMessage"), jenjangInput.value === akunBenar.jenjang, "Jenjang pendidikan tidak sesuai.");
+}
+
+nimInput.addEventListener("input", validasiNim);
+passwordInput.addEventListener("input", validasiPassword);
+jenjangInput.addEventListener("change", validasiJenjang);
+
+togglePassword.addEventListener("click", function () {
+  const tampilkan = passwordInput.type === "password";
+  passwordInput.type = tampilkan ? "text" : "password";
+  togglePassword.textContent = tampilkan ? "🙈" : "👁";
+  togglePassword.setAttribute("aria-label", tampilkan ? "Sembunyikan password" : "Tampilkan password");
+  togglePassword.title = tampilkan ? "Sembunyikan password" : "Tampilkan password";
+});
+
+loginForm.addEventListener("submit", function (event) {
+  event.preventDefault();
+  const nimBenar = validasiNim();
+  const passwordBenar = validasiPassword();
+  const jenjangBenar = validasiJenjang();
+  if (!nimBenar || !passwordBenar || !jenjangBenar) {
+    loginMessage.textContent = "Login gagal. Periksa kembali kolom yang bertanda merah.";
+    return;
+  }
+  loginMessage.textContent = "";
+  loginPage.hidden = true;
+  cvPage.hidden = false;
+  window.scrollTo(0, 0);
+});
+
+ document.getElementById("logoutButton").addEventListener("click", function () {
+  cvPage.hidden = true;
+  loginPage.hidden = false;
+  loginForm.reset();
+  [nimInput, passwordInput, jenjangInput].forEach(input => input.classList.remove("valid", "invalid"));
+  document.querySelectorAll(".field-message").forEach(message => {
+    message.textContent = "";
+    message.className = "field-message";
+  });
+  passwordInput.type = "password";
+  togglePassword.textContent = "👁";
+  togglePassword.setAttribute("aria-label", "Tampilkan password");
+  togglePassword.title = "Tampilkan password";
+  loginMessage.textContent = "";
+  window.scrollTo(0, 0);
+});
+</script>
+</body>
+</html>
